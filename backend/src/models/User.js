@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { hash } from 'bcryptjs'
+import { compare, hash } from 'bcryptjs'
 import  { sign } from 'jsonwebtoken';
 import { SECRECT } from "../constants";
 import  { randomBytes } from "crypto";
@@ -19,13 +19,17 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    email: {
-        type: String,
+    phonenumber: {
+        type: Number,
         required: true,
     },
     idnumber:{
         type: Number,
         require: true,
+    },
+    email: {
+        type: String,
+        required: true,
     },
     password: {
         type: String,
@@ -35,7 +39,7 @@ const UserSchema = new Schema({
         type: Boolean,
         required: false,
     },
-    verificationcode: {
+    verificationCode: {
         type: String,
         required: false,
     },
@@ -52,7 +56,7 @@ const UserSchema = new Schema({
 }, { timestamps: true });
 
 
-UserSchema.pre("save", async function (name){
+UserSchema.pre("save", async function (next){
     let user = this;
     if(!user.isModified("password")) return next();
     user.password = await hash(user.password, 10);
@@ -78,7 +82,7 @@ UserSchema.methods.generatePasswordReset = function () {
 };
 
 UserSchema.methods.getUserInfo = function () {
-    return pick(this, ["_id", "firstname", "lastname", "middlename", "email", "idnumber"]);
+    return pick(this, ["_id", "firstname", "lastname", "middlename", "email", "idnumber", "verified"]);
 }
 
 const User = model("user", UserSchema);

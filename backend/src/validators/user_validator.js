@@ -11,12 +11,11 @@ const password = check(
     "password",
     "Password is required of mininum length of 6."
 )
-.not()
 .isLength({
     min: 6,
 });
 
 export const RegisterValidations = [firstname, lastname, middlename, idnumber, phonenumber, email, password];
-export const AuthenteValidations = [email, password];
+export const AuthenticateValidations = [email, password];
 
 

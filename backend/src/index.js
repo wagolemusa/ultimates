@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from "express";
 import consola from  'consola';
 import mongoose from "mongoose";
+import passport from "passport";
 import { json } from "body-parser";
 
 import { DB, PORT } from './constants';
@@ -12,6 +13,9 @@ import { DB, PORT } from './constants';
 import UserApis from './apis/user';
 
 
+// import passport middleware
+require("./middlewares/passport-middleware")
+
 // Initialalize express application
 const app = express();
 
@@ -19,6 +23,7 @@ const app = express();
 // Application Middlewares
 app.use(cors());
 app.use(json());
+app.use(passport.initialize());
 
 // inject sub routes and  apis
 app.use("/users", UserApis);
