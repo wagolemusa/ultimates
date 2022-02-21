@@ -78,7 +78,7 @@ UserSchema.methods.generateJWT = async function () {
 
 UserSchema.methods.generatePasswordReset = function () {
     this.resetPasswordExpiresIn = Date.now() + 36000000;
-    this.resetPasswordExpiresIn = randomBytes(20).toString("hex");
+    this.resetPasswordToken = randomBytes(20).toString("hex");
 };
 
 UserSchema.methods.getUserInfo = function () {

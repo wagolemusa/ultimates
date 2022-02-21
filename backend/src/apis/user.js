@@ -5,8 +5,9 @@ import { randomBytes } from "crypto";
 import { DOMAIN } from '../constants';
 import sendMain from '../functions/emailSender'
 import { userAuth } from '../middlewares/auth';
-import { RegisterValidations, AuthenticateValidations } from '../validators';
 import Validator from '../middlewares/validater-middleware'
+import { RegisterValidations, AuthenticateValidations, ResetPassword } from '../validators';
+
 
 const router = Router()
 
@@ -151,6 +152,119 @@ router.post("/api/authenticate", AuthenticateValidations, Validator, async(req, 
        user: req.user
     });
 })
+
+/**
+ * @description To initiate the password reset process
+ * @api /users/api/reset-password"
+ * @access Public
+ * @type POST
+ */
+router.put("/api/reset-password", ResetPassword, Validator, async(req, res)=>{
+    try{
+        let { email } = req.body;
+        let user = await User.findOne({ email });
+        if(!user){
+            return res.status(400).json({
+                seccuss: false,
+                message: "User with email is not find.",
+            });
+        }
+        user.generatePasswordReset();
+        await user.save();
+
+        // Send the password reset in Email 
+        let html = `
+        <h1>Hello, ${user.lastname}</h1>
+        <p>Please click the following link to reset your passsword</p>
+        <a href="${DOMAIN}users/reset-password-now/${user.resetPasswordToken}">Verify Now</a>
+    `;
+        sendMain(user.email, "Reset Password", "Please reset your password", html);
+        return res.status(404).json({
+            success: true,
+            message: "Password Reset is sent to your account"
+        });  
+    }catch(error){
+        console.log(error)
+        return res.status(500).json({
+            succuss: false,
+            message: 'An error occured.'
+        })
+    }
+})
+
+
+
+
+ /**
+ * @description Torender reset password page
+ * @api /users/api/reset-password-now/:resetPasswordToken
+ * @access Restricted by Email
+ * @type GET
+ */
+
+ router.get('/reset-password-now/:resetPasswordToken', async(req, res) => {
+     try{
+         let { resetPasswordToken }  = req.params;
+         let user = await User.findOne({resetPasswordToken,
+            resetPasswordExpiresIn: { $gt:Date.now() }, });
+         if(!user){
+             return res.status(401).json({
+                 success: false,
+                 message: "Please reset token is expired."
+             });
+         }
+         return res.sendFile(join(__dirname, "../templates/password-reset.html"));
+
+     }catch(error){
+         console.log(error)
+        return res.sendFile(join(__dirname, "../templates/errors.html"));
+     }
+ })
+
+ /**
+ * @description To get the authanticated user profile
+ * @api /users/api/reset-password-now/:resetPasswordToken
+ * @access Restricted by Email
+ * @type POST
+ */
+router.post('/api/reset-password-now', async(req, res)=>{
+    try{
+
+        let { resetPasswordToken, password } = req.body;
+        let user = await User.findOne({
+            resetPasswordToken,
+            resetPasswordExpiresIn
+        });
+        if(!user){
+            return res.status(401).json({
+                success: false,
+                message: "Password reset token  is invalid or has expired"
+            })
+        }
+        user.password = password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpiresIn = undefined;
+
+        await user.save();
+       // Send the password reset in Email 
+       let html = `
+       <h1>Hello, ${user.lastname}</h1>
+       <p>Your Password is reseted Successfully</p>
+   `;
+       sendMain(user.email, "Reset Password Successfull", "Your password has been changed", html);
+       return res.status(200).json({
+           success: true,
+           message: "Your password request is reseted successfully Now you can login your account"
+       });  
+    
+    }catch(err){
+        return res.status(400)({
+            success: false,
+            message: "Samething Went Wrong"
+        })
+    }
+});
+
 export default router;
 
 
