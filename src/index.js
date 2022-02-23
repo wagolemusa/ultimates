@@ -47,3 +47,7 @@ const main = async () => {
 }
 
 main();
+
+app.get("*",(req, res) =>{
+    res.sendFile(path.join(__dirname,"./ultimate/build/index.html"))
+  })

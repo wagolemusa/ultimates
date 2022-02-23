@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r esm",
-    "dev": "nodemon -r esm ."
+    "dev": "nodemon -r esm .",
+    "test": "node -r esm",
+    "build": "cd bill && npm install && npm run build",
+    "heroku-postbuild": "npm run build"
   },
   "keywords": [],
   "author": "",

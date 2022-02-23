@@ -107,10 +107,18 @@ router.post("/api/authenticate", AuthenticateValidations, Validator, async(req, 
     try{
         let { email, password} = req.body;
         let user = await User.findOne({ email})
+
         if(!user){
             return res.status(404).json({
                 success: false.valueOf,
                 message: "Email not found"
+            })
+        }
+
+        if(!user.verified){
+            return res.status(403).json({
+                success: false,
+                message: "Verify Your Account"
             })
         }
         if (!(await user.comparePassword(password))){
