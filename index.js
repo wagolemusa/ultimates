@@ -3,9 +3,9 @@ import consola from  'consola';
 import mongoose from "mongoose";
 import passport from "passport";
 import { json } from "body-parser";
-import cors from 'cors';
-
+import cors from 'cors'
 import { DB, PORT } from './constants';
+const path = require("path")
 
 
 // import Routers
