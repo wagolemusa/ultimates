@@ -27,6 +27,7 @@ app.use(passport.initialize());
 
 // inject sub routes and  apis
 app.use("/users", UserApis);
+app.use(express.static(path.join(__dirname,"./ultimate/build","index.html")))
 
 
 const main = async () => {
