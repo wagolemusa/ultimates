@@ -37,6 +37,8 @@ app.use("/users", UserApis);
 // app.use(express.static(publicPath));
 app.use(express.static('ultimate/build'));
 
+
+let port = process.env.PORT || 5000;
 const main = async () => {
     try {
         // Connect with the database
@@ -49,7 +51,7 @@ const main = async () => {
         // Start application listening  for request on server
 
     
-    app.listen(PORT, () => consola.success(`Server started on port ${PORT}`));
+    app.listen(port, () => consola.success(`Server started on port ${port}`));
     }catch(error){
         consola.log(`Unbale to start the servr \n${error.message}`)
     }
