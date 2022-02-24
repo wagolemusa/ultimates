@@ -33,8 +33,9 @@ app.use("/users", UserApis);
 // app.use(express.static(path.join(__dirname,"./ultimate/build","index.html")))
 // app.use(express.static(path.join(__dirname, 'build')));
 
-const publicPath = path.join(__dirname, '..', 'public');
-app.use(express.static(publicPath));
+// const publicPath = path.join(__dirname, '..', 'public');
+// app.use(express.static(publicPath));
+app.use(express.static('ultimate/build'));
 
 const main = async () => {
     try {
@@ -58,6 +59,10 @@ main();
 // app.get("*",(req, res) =>{
 //     res.sendFile(path.join(__dirname,"./ultimate/build/index.html"))
 //   })
-app.get('*', (req, res) => {
-    res.sendFile(path.join(publicPath, 'main.html'));
- });
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(publicPath, 'index.html'));
+//  });
+
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname+'/ultimate/build/index.html'));
+});
