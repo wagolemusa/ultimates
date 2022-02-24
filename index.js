@@ -48,7 +48,8 @@ const main = async () => {
         consola.success("DATABASE CONNECTED...");
         // Start application listening  for request on server
 
-        app.listen(PORT, () => consola.success(`Server started on port ${PORT}`));
+    
+    app.listen(PORT, () => consola.success(`Server started on port ${PORT}`));
     }catch(error){
         consola.log(`Unbale to start the servr \n${error.message}`)
     }
