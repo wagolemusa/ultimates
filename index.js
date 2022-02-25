@@ -6,9 +6,7 @@ import { json } from "body-parser";
 import cors from 'cors'
 import { DB, PORT } from './constants';
 const path = require("path")
-
-
-
+var morgan = require('morgan')
 
 
 // import Routers
@@ -27,6 +25,7 @@ const app = express();
 app.use(cors());
 app.use(json());
 app.use(passport.initialize());
+app.use(morgan('combined'))
 
 // inject sub routes and  apis
 app.use("/users", UserApis);
@@ -35,7 +34,8 @@ app.use("/users", UserApis);
 
 // const publicPath = path.join(__dirname, '..', 'public');
 // app.use(express.static(publicPath));
-app.use(express.static('ultimate/build'));
+app.use(express.static(path.join(__dirname, 'ultimate/build')));
+// app.use(express.static('ultimate/build'));
 
 
 // let port = process.env.PORT || 5000;
@@ -67,6 +67,10 @@ main();
 //     res.sendFile(path.join(publicPath, 'index.html'));
 //  });
 
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname+'/ultimate/build/index.html'));
-});
+// app.get("*", function(req, res) {
+//     res.sendFile(path.join(__dirname+'/ultimate/build/index.html'));
+// });
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'ultimate/build', 'index.html'));
+  });
