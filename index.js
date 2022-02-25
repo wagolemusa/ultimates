@@ -38,10 +38,11 @@ app.use("/users", UserApis);
 app.use(express.static('ultimate/build'));
 
 
-let port = process.env.PORT || 5000;
+// let port = process.env.PORT || 5000;
+
 const main = async () => {
     try {
-        // Connect with the database
+        // Connect with the database 
         await mongoose.connect(DB, {
             useNewUrlParser: true,
             useFindAndModify: false,
@@ -51,7 +52,7 @@ const main = async () => {
         // Start application listening  for request on server
 
     
-    app.listen(port, () => consola.success(`Server started on port ${port}`));
+    app.listen(PORT, () => consola.success(`Server started on port ${PORT}`));
     }catch(error){
         consola.log(`Unbale to start the servr \n${error.message}`)
     }
