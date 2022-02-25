@@ -1,5 +1,4 @@
 import express from "express";
-import consola from  'consola';
 import mongoose from "mongoose";
 import passport from "passport";
 import { json } from "body-parser";
