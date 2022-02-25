@@ -48,13 +48,13 @@ const main = async () => {
             useFindAndModify: false,
             useUnifiedTopology: true,
         });
-        consola.success("DATABASE CONNECTED...");
+        console.log("DATABASE CONNECTED...");
         // Start application listening  for request on server
 
     
-    app.listen(PORT, () => consola.success(`Server started on port ${PORT}`));
+    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
     }catch(error){
-        consola.log(`Unbale to start the servr \n${error.message}`)
+        console.log(`Unbale to start the servr \n${error.message}`)
     }
 }
 
