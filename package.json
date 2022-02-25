@@ -3,11 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engines": {
-    "node": "14.19.0"
-  },
   "scripts": {
-    "start": "node -r esm",
+    "start": "node index.js",
     "dev": "nodemon -r esm .",
     "test": "node -r esm",
     "build": "cd ultimate && npm install && npm run build",
