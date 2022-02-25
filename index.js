@@ -34,7 +34,7 @@ app.use("/users", UserApis);
 
 // const publicPath = path.join(__dirname, '..', 'public');
 // app.use(express.static(publicPath));
-app.use(express.static(path.join(__dirname, 'ultimate/build')));
+app.use(express.static(path.join(__dirname, 'ultimate/build')));    
 // app.use(express.static('ultimate/build'));
 
 
