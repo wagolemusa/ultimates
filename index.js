@@ -1,4 +1,5 @@
 import express from "express";
+import dotenv  from "dotenv";
 import mongoose from "mongoose";
 import passport from "passport";
 import { json } from "body-parser";
@@ -18,6 +19,7 @@ require("./middlewares/passport-middleware")
 
 // Initialalize express application
 const app = express();
+dotenv.config()
 
 
 // Application Middlewares
