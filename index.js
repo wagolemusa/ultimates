@@ -38,7 +38,7 @@ app.use("/users", UserApis);
 app.use(express.static('ultimate/build'));
 
 
-// let port = process.env.PORT || 5000;
+let port = process.env.PORT || 3000;
 
 const main = async () => {
     try {
@@ -52,7 +52,7 @@ const main = async () => {
         // Start application listening  for request on server
 
     
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+    app.listen(port, () => console.log(`Server started on port ${port}`));
     }catch(error){
         console.log(`Unbale to start the servr \n${error.message}`)
     }
