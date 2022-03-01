@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from  'react'
+import React, { useContext, useRef,useState } from  'react'
 import { Link } from "react-router-dom";
 import { Context } from '../context/Context';
 import axios from 'axios';
@@ -8,9 +8,11 @@ function Login () {
     const userRef = useRef();
     const passwordRef = useRef();
     const { dispatch, isFetching } = useContext(Context);
+    const [errors, setError] = useState("");
   
     const handleSubmit = async (e) => {
       e.preventDefault();
+      setError("");
       dispatch({ type: "LOGIN_START" });
       try {
         const res = await axios.post("/users/api/authenticate", {
@@ -18,7 +20,8 @@ function Login () {
           password: passwordRef.current.value,
         });
         dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
-      } catch (err) {
+      } catch (errors) {
+        setError(errors.value.msg);
         dispatch({ type: "LOGIN_FAILURE" });
       }
     };
@@ -29,6 +32,7 @@ function Login () {
         <div>
         <div class="container login-container">
             <div class="row">
+                    <h>{errors}</h>
                 <div class="login-form-1">
                     <h3>Login</h3>
                     <form onSubmit={handleSubmit}>

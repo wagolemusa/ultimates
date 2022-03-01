@@ -8,7 +8,6 @@ import { userAuth } from '../middlewares/auth';
 import Validator from '../middlewares/validater-middleware'
 import { RegisterValidations, AuthenticateValidations, ResetPassword } from '../validators';
 
-
 const router = Router()
 
 /**
@@ -61,9 +60,7 @@ router.post('/api/register', RegisterValidations, Validator, async (req, res) =>
 
 
     } catch (error) {
-        
         console.log(error)
-
         
     }
 
@@ -144,8 +141,6 @@ router.post("/api/authenticate", AuthenticateValidations, Validator, async(req, 
     }
 })
 
-
-
 /**
  * @description To get authenticated user 
  * @access Private
@@ -177,6 +172,12 @@ router.put("/api/reset-password", ResetPassword, Validator, async(req, res)=>{
                 message: "User with email is not find.",
             });
         }
+        if(!user.verified){
+            return res.status(403).json({
+                success: false,
+                message: "Verify Your Account"
+            })
+        }
         user.generatePasswordReset();
         await user.save();
 
@@ -190,17 +191,13 @@ router.put("/api/reset-password", ResetPassword, Validator, async(req, res)=>{
         return res.status(404).json({
             success: true,
             message: "Password Reset is sent to your account"
-        });  
+        });
+         
     }catch(error){
         console.log(error)
-        return res.status(500).json({
-            succuss: false,
-            message: 'An error occured.'
-        })
+
     }
 })
-
-
 
 
  /**

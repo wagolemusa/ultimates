@@ -7,14 +7,20 @@ function ForgetPassord () {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try{
-            const res = await axios.put("/users/api/reset-password", {
+    
+            await axios.put("/users/api/reset-password", {
                 email
             })
-            res.data && window.location.replace("/")
-        }catch(error){
-            console.log(error)
-        }
+            .then(res => {
+
+                if(res.status === 404){
+                    window.location.replace("/registerSuccessfully")
+                }else{
+                    // setError(res.data)  
+                    console.log(res.data)
+                }
+         
+        })
     }
 
     return (
