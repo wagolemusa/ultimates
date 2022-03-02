@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon -r esm .",
-    "build": "cd ultimate && npm install && npm run build",
-    "heroku-postbuild": "npm run build"
+    "start": "node -r esm",
+    "dev": "nodemon -r esm"
   },
   "keywords": [],
   "author": "",
@@ -28,5 +27,10 @@
     "nodemon": "^2.0.15",
     "passport": "^0.5.2",
     "passport-jwt": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.5",
+    "@babel/preset-env": "^7.16.11"
   }
 }

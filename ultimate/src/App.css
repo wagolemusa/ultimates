@@ -59,7 +59,15 @@
         text-decoration: none;
     }
 
+    .login-container p {
+        color: red;
+        font-size: 15px;
+    }
 
+    .login-container h2 {
+        color: #00B74A;
+        font-size: 30px;
+    }
     @media screen and (max-width: 768px){
         .login-container{
             margin-top: 5%;

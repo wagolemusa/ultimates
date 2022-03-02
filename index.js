@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import passport from "passport";
 import { json } from "body-parser";
 import cors from 'cors'
-import { DB, PORT } from './constants';
+import { DB, PORT } from "./constants/index";
 const path = require("path")
 var morgan = require('morgan')
 
