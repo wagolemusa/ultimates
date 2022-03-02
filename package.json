@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+
   "scripts": {
-    "start": "npm run build && nodemon dist/index.js",
-    "build": "cd ultimate && npm install && npm run build",
-    "heroku-postbuild": "npm run build"
+    "start": "node -r esm",
+    "dev": "nodemon -r esm"
   },
   "keywords": [],
   "author": "",
